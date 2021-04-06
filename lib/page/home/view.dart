@@ -36,7 +36,6 @@ class HomePage extends StatelessWidget {
 
   Widget _buildBannerWidget() {
     return Container(
-      color: Colors.green,
       height: 190,
       child: Obx(() => Swiper(
             onTap: _onBannerClick,
