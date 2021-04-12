@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/data/content_model.dart';
+import 'package:flutter_wan_android/router/router.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -122,8 +123,7 @@ class ProjectListPage extends StatelessWidget {
   }
 
   _onItemClick(ContentModel content) {
-    Get.snackbar(content.title, content.link,
-        snackPosition: SnackPosition.BOTTOM,
-        animationDuration: Duration(milliseconds: 500));
+    Get.toNamed(AppRoutes.WebView,
+        arguments: {"title": content.title, "url": content.link});
   }
 }

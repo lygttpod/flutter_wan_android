@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wan_android/data/content_model.dart';
+import 'package:flutter_wan_android/router/router.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -15,13 +16,24 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    return Column(
-      children: [
-        _buildBannerWidget(),
-        Expanded(
-          child: _buildListWidget(),
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("首页"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => Get.toNamed(AppRoutes.searchPage))
+        ],
+      ),
+      body: Column(
+        children: [
+          _buildBannerWidget(),
+          Expanded(
+            child: _buildListWidget(),
+          )
+        ],
+      ),
     );
   }
 
@@ -110,8 +122,7 @@ class HomePage extends StatelessWidget {
   }
 
   _onItemClick(ContentModel homeList) {
-    Get.snackbar(homeList.title, homeList.link,
-        snackPosition: SnackPosition.BOTTOM,
-        animationDuration: Duration(milliseconds: 500));
+    Get.toNamed(AppRoutes.WebView,
+        arguments: {"title": homeList.title, "url": homeList.link});
   }
 }
