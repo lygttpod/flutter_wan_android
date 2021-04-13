@@ -11,6 +11,15 @@ class HomeLogic extends BaseGetxController {
 
   var homeList = <ContentModel>[].obs;
 
+  var alpha = 0.obs;
+
+  updateScrollOffset(double scrollOffset) {
+    if (scrollOffset <= 130) {
+      this.alpha.value = scrollOffset * 255.0 ~/ 130.0;
+      print("alpha = $alpha");
+    }
+  }
+
   loadBannerData() {
     HttpUtil.getInstance().get("/banner/json",
         onSuccess: (data) =>
