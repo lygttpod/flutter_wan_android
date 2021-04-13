@@ -3,12 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wan_android/data/content_model.dart';
 import 'package:flutter_wan_android/router/router.dart';
+import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   final HomeLogic logic = Get.put(HomeLogic());
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    logic.loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +42,26 @@ class HomePage extends StatelessWidget {
               onPressed: () => Get.toNamed(AppRoutes.searchPage))
         ],
       ),
-      body: Column(
-        children: [
-          _buildBannerWidget(),
-          Expanded(
-            child: _buildListWidget(),
-          )
-        ],
-      ),
+      body: Obx(() => appPageStatusWidget(
+          logic.pageStatus.value,
+          Column(
+            children: [
+              _buildBannerWidget(),
+              Expanded(
+                child: _buildListWidget(),
+              )
+            ],
+          ))),
     );
   }
 
   Widget _buildListWidget() {
-    return Obx(() => ListView.builder(
+    return ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: logic.homeList.length,
         itemBuilder: (_, index) {
           return _buildContentWidget(index);
-        }));
+        });
   }
 
   Widget _buildBannerWidget() {

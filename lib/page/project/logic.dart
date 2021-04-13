@@ -10,10 +10,4 @@ class ProjectLogic extends GetxController {
         onSuccess: (data) =>
             {tabList.assignAll(ProjectModel.formatTabData(data).tabs)});
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-    loadTabData();
-  }
 }

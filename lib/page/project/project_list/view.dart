@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/config/page_status.dart';
 import 'package:flutter_wan_android/data/content_model.dart';
 import 'package:flutter_wan_android/router/router.dart';
+import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
 
-class ProjectListPage extends StatelessWidget {
+class ProjectListPage extends StatefulWidget {
   final int cid;
 
   ProjectListLogic logic;
@@ -15,30 +17,48 @@ class ProjectListPage extends StatelessWidget {
   }
 
   @override
+  _ProjectListPageState createState() => _ProjectListPageState();
+}
+
+class _ProjectListPageState extends State<ProjectListPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.logic.loadTabData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
-      child: _buildListWidget(),
+      child: Obx(() => _buildListWidget()),
     );
   }
 
   Widget _buildListWidget() {
-    return Obx(() => ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: logic.contentList.length,
-        itemBuilder: (_, index) {
-          return _buildItemWidget(index);
-        }));
+    return appPageStatusWidget(
+        widget.logic.pageStatus.value,
+        ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: widget.logic.contentList.length,
+            itemBuilder: (_, index) {
+              return _buildItemWidget(index);
+            }));
   }
 
   Widget _buildItemWidget(int index) {
     return InkWell(
-        onTap: () => _onItemClick(logic.contentList[index]),
+        onTap: () => _onItemClick(widget.logic.contentList[index]),
         child: Column(
           children: [
             Row(
               children: [
-                _buildCoverWidget(logic.contentList[index].envelopePic),
-                _buildContentWidget(logic.contentList[index])
+                _buildCoverWidget(widget.logic.contentList[index].envelopePic),
+                _buildContentWidget(widget.logic.contentList[index])
               ],
             ),
             Divider(

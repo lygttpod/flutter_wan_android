@@ -4,20 +4,37 @@ import 'package:get/get.dart';
 import 'logic.dart';
 import 'project_list/view.dart';
 
-class ProjectPage extends StatelessWidget {
+class ProjectPage extends StatefulWidget {
+  @override
+  _ProjectPageState createState() => _ProjectPageState();
+}
+
+class _ProjectPageState extends State<ProjectPage>
+    with AutomaticKeepAliveClientMixin {
   final ProjectLogic logic = Get.put(ProjectLogic());
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    logic.loadTabData();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Obx(() => DefaultTabController(
-        length: logic.tabList.length,
-        child: Column(
-          children: [
-            _buildStatusBar(context),
-            _buildTabBar(),
-            _buildTabBarView()
-          ],
-        )));
+    super.build(context);
+    return Obx(() =>
+        DefaultTabController(
+            length: logic.tabList.length,
+            child: Column(
+              children: [
+                _buildStatusBar(context),
+                _buildTabBar(),
+                _buildTabBarView()
+              ],
+            )));
   }
 
   Widget _buildTabBar() {
@@ -33,7 +50,7 @@ class ProjectPage extends StatelessWidget {
           labelColor: Colors.white,
           isScrollable: true,
           tabs:
-              logic.tabList.map((element) => Tab(text: element.name)).toList()),
+          logic.tabList.map((element) => Tab(text: element.name)).toList()),
     );
   }
 
@@ -47,7 +64,10 @@ class ProjectPage extends StatelessWidget {
 
   Widget _buildStatusBar(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).padding.top,
+        height: MediaQuery
+            .of(context)
+            .padding
+            .top,
         child: Container(color: Colors.blue));
   }
 }
