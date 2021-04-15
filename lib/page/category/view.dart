@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/data/category_model.dart';
+import 'package:flutter_wan_android/router/router.dart';
 import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
 import 'package:flutter_wan_android/widget/common_app_bar.dart';
 import 'package:get/get.dart';
@@ -100,5 +101,7 @@ class _CategoryPageState extends State<CategoryPage>
 
   _onItemClick(Category category) {
     print(category.name);
+    Get.toNamed(AppRoutes.articleListPage,
+        arguments: {"title": category.name, "cid": category.id});
   }
 }
