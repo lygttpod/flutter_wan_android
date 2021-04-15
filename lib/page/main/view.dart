@@ -22,9 +22,9 @@ class MainPage extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white60,
-            backgroundColor: Colors.blue,
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey,
+            elevation: 5,
             showUnselectedLabels: true,
             items: Constant.mainTab
                 .map((e) => BottomNavigationBarItem(
