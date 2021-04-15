@@ -8,6 +8,7 @@ class CategoryLogic extends BaseGetxController {
   var categoryList = <Category>[].obs;
 
   loadTabData() {
+    updatePageStatus(PageStatus.LOADING);
     HttpUtil.getInstance().get("/tree/json", onSuccess: (data) {
       updatePageStatus(PageStatus.SUCCESS);
       categoryList.assignAll(CategoryModel.fromJson(data).categoryList);

@@ -36,6 +36,7 @@ class HomeLogic extends BaseGetxController {
   }
 
   loadData() {
+    updatePageStatus(PageStatus.LOADING);
     loadBannerData();
     loadHomeData();
   }

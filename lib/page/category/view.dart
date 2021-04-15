@@ -34,14 +34,16 @@ class _CategoryPageState extends State<CategoryPage>
   }
 
   Widget _buildContainer() {
-    return Obx(() => appPageStatusWidget(
-        logic.pageStatus.value,
-        ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: logic.categoryList.length,
-            itemBuilder: (_, index) {
-              return _buildItemWidget(logic.categoryList[index]);
-            })));
+    return Obx(() => AppPageStatusWidget(
+          child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: logic.categoryList.length,
+              itemBuilder: (_, index) {
+                return _buildItemWidget(logic.categoryList[index]);
+              }),
+          pageStatus: logic.pageStatus.value,
+          onReplayBtnPressed: () => logic.loadTabData(),
+        ));
   }
 
   Widget _buildItemWidget(Category category) {

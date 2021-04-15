@@ -38,8 +38,11 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _buildContent(BuildContext context) {
-    return Obx(() =>
-        appPageStatusWidget(logic.pageStatus.value, _buildHomeContainer()));
+    return Obx(() => AppPageStatusWidget(
+          child: _buildHomeContainer(),
+          pageStatus: logic.pageStatus.value,
+          onReplayBtnPressed: () => logic.loadData(),
+        ));
   }
 
   Widget _buildHomeContainer() {
@@ -86,7 +89,7 @@ class _HomePageState extends State<HomePage>
             itemCount: logic.banners.length,
             itemBuilder: (context, index) {
               return Image.network(logic.banners[index].imagePath,
-                  fit: BoxFit.fitWidth);
+                  fit: BoxFit.fitHeight);
             },
           )),
     );

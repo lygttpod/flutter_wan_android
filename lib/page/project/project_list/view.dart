@@ -40,14 +40,16 @@ class _ProjectListPageState extends State<ProjectListPage>
   }
 
   Widget _buildListWidget() {
-    return appPageStatusWidget(
-        widget.logic.pageStatus.value,
-        ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: widget.logic.contentList.length,
-            itemBuilder: (_, index) {
-              return _buildItemWidget(index);
-            }));
+    return AppPageStatusWidget(
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: widget.logic.contentList.length,
+          itemBuilder: (_, index) {
+            return _buildItemWidget(index);
+          }),
+      pageStatus: widget.logic.pageStatus.value,
+      onReplayBtnPressed: () => widget.logic.loadTabData(),
+    );
   }
 
   Widget _buildItemWidget(int index) {

@@ -8,14 +8,18 @@ class AppPageStatusWidget extends StatelessWidget {
 
   final Function onReplayBtnPressed;
 
-  const AppPageStatusWidget({this.child, this.pageStatus, this.onReplayBtnPressed}) : super();
+  const AppPageStatusWidget(
+      {this.child, this.pageStatus, this.onReplayBtnPressed})
+      : super();
 
   @override
   Widget build(BuildContext context) {
-    return appPageStatusWidget(child, pageStatus ?? PageStatus.SUCCESS, onReplayBtnPressed);
+    return appPageStatusWidget(
+        child, pageStatus ?? PageStatus.SUCCESS, onReplayBtnPressed);
   }
 
-  Widget appPageStatusWidget(Widget successWidget,PageStatus pageStatus,  Function onReplayBtnPressed) {
+  Widget appPageStatusWidget(Widget successWidget, PageStatus pageStatus,
+      Function onReplayBtnPressed) {
     switch (pageStatus) {
       case PageStatus.LOADING:
         return appLoadingPage();
@@ -37,6 +41,7 @@ class AppPageStatusWidget extends StatelessWidget {
   Widget appErrorPage(Function onReplayBtnPressed) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("页面出错啦"),
           ElevatedButton(onPressed: onReplayBtnPressed, child: Text("点击重试"))

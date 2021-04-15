@@ -12,6 +12,7 @@ class ProjectListLogic extends BaseGetxController {
   ProjectListLogic(this.cid);
 
   loadTabData() {
+    updatePageStatus(PageStatus.LOADING);
     HttpUtil.getInstance().get("/project/list/1/json?cid=$cid",
         onSuccess: (data) {
           updatePageStatus(PageStatus.SUCCESS);

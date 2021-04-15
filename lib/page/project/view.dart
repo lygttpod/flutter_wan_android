@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -25,16 +26,19 @@ class _ProjectPageState extends State<ProjectPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Obx(() =>
-        DefaultTabController(
-            length: logic.tabList.length,
-            child: Column(
-              children: [
-                _buildStatusBar(context),
-                _buildTabBar(),
-                _buildTabBarView()
-              ],
-            )));
+    return Obx(() => AppPageStatusWidget(
+          child: DefaultTabController(
+              length: logic.tabList.length,
+              child: Column(
+                children: [
+                  _buildStatusBar(context),
+                  _buildTabBar(),
+                  _buildTabBarView()
+                ],
+              )),
+          pageStatus: logic.pageStatus.value,
+          onReplayBtnPressed: () => logic.loadTabData(),
+        ));
   }
 
   Widget _buildTabBar() {
@@ -50,7 +54,7 @@ class _ProjectPageState extends State<ProjectPage>
           labelColor: Colors.white,
           isScrollable: true,
           tabs:
-          logic.tabList.map((element) => Tab(text: element.name)).toList()),
+              logic.tabList.map((element) => Tab(text: element.name)).toList()),
     );
   }
 
@@ -64,10 +68,7 @@ class _ProjectPageState extends State<ProjectPage>
 
   Widget _buildStatusBar(BuildContext context) {
     return SizedBox(
-        height: MediaQuery
-            .of(context)
-            .padding
-            .top,
+        height: MediaQuery.of(context).padding.top,
         child: Container(color: Colors.blue));
   }
 }
