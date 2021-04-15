@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage>
             itemCount: logic.banners.length,
             itemBuilder: (context, index) {
               return Image.network(logic.banners[index].imagePath,
-                  fit: BoxFit.fitHeight);
+                  fit: BoxFit.fill);
             },
           )),
     );
