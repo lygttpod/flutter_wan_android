@@ -6,21 +6,21 @@ import 'package:flutter_wan_android/http/http_util.dart';
 import 'package:get/get.dart';
 
 class ProjectListLogic extends BaseGetxController {
-  final int cid;
   var contentList = <ContentModel>[].obs;
 
-  ProjectListLogic(this.cid);
-
-  loadTabData() {
+  loadTabData(int cid) {
     updatePageStatus(PageStatus.LOADING);
     HttpUtil.getInstance().get("/project/list/1/json?cid=$cid",
         onSuccess: (data) {
-          updatePageStatus(PageStatus.SUCCESS);
-          contentList.assignAll(HomeModel
-              .fromJson(data["datas"])
-              .contents);
-        }, onError: (error) {
-          updatePageStatus(PageStatus.ERROR);
-        });
+      var list = HomeModel.fromJson(data["datas"]).contents;
+      if (list == null || list.length == 0) {
+        updatePageStatus(PageStatus.EMPTY);
+      } else {
+        updatePageStatus(PageStatus.SUCCESS);
+        contentList.assignAll(list);
+      }
+    }, onError: (error) {
+      updatePageStatus(PageStatus.ERROR);
+    });
   }
 }

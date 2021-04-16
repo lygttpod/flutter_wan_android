@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_wan_android/data/content_model.dart';
 import 'package:flutter_wan_android/router/router.dart';
 import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
+import 'package:flutter_wan_android/widget/article_list_item.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage>
   Widget _buildSliversList() {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
-            (context, index) => _buildContentWidget(index),
+            (context, index) => ArticleListItem(logic.homeList[index], index),
             childCount: logic.homeList.length));
   }
 
@@ -95,69 +95,10 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget _buildContentWidget(int index) {
-    return InkWell(
-        onTap: () => _onItemClick(logic.homeList[index]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 5),
-              child: Text(logic.homeList[index].title,
-                  style: TextStyle(fontSize: 15)),
-            ),
-            Container(
-                margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                child: Row(
-                  children: [
-                    Text(getAuthor(logic.homeList[index]),
-                        style: TextStyle(fontSize: 10, color: Colors.black45)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(getCategory(logic.homeList[index]),
-                        style: TextStyle(fontSize: 10, color: Colors.black45)),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(logic.homeList[index].niceDate,
-                                style: TextStyle(
-                                    fontSize: 10, color: Colors.black45)))),
-                  ],
-                )),
-            Divider(
-              height: 0.5,
-              color: Colors.blueGrey,
-            )
-          ],
-        ));
-  }
-
-  String getAuthor(ContentModel model) {
-    if (model.shareUser == null || model.shareUser.isEmpty) {
-      return "作者：${model.author}";
-    } else {
-      return "分享者：${model.shareUser}";
-    }
-  }
-
-  String getCategory(ContentModel model) {
-    return "分类：${model.superChapterName}/${model.chapterName}";
-  }
-
   _onBannerClick(int index) {
     Get.toNamed(AppRoutes.WebView, arguments: {
       "title": logic.banners[index].title,
       "url": logic.banners[index].url
     });
-  }
-
-  _onItemClick(ContentModel homeList) {
-    Get.toNamed(AppRoutes.WebView,
-        arguments: {"title": homeList.title, "url": homeList.link});
   }
 }
