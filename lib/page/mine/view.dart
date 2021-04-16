@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/router/router.dart';
 import 'package:flutter_wan_android/utils/color_utils.dart';
 import 'package:flutter_wan_android/widget/app_page_status_widget.dart';
 import 'package:flutter_wan_android/widget/common_horizontal_item.dart';
@@ -106,12 +107,12 @@ class MinePage extends StatelessWidget {
           CommonHorizontalItem(
             iconData: Icons.article_rounded,
             text: "公众号",
-            onPressed: () => {},
+            onPressed: () => { Get.toNamed(AppRoutes.wXArticlePage)},
           ),
           CommonHorizontalItem(
             iconData: Icons.language_rounded,
-            text: "常用网站",
-            onPressed: () => {},
+            text: "每日一问",
+            onPressed: () => { Get.toNamed(AppRoutes.wenDaPage) },
           ),
           CommonHorizontalItem(
             iconData: Icons.navigation_rounded,
