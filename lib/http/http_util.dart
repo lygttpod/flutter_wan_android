@@ -30,9 +30,10 @@ class HttpUtil {
     request(path, method: "get", onSuccess: onSuccess, onError: onError);
   }
 
-  post(String path,
+  post(String path, Map<String, dynamic> params,
       {Function onSuccess, Function onError, CancelToken cancelToken}) {
-    request(path, method: "post", onSuccess: onSuccess, onError: onError);
+    request(path,
+        method: "post", params: params, onSuccess: onSuccess, onError: onError);
   }
 
   void request(String path,
@@ -49,16 +50,18 @@ class HttpUtil {
             queryParameters: params,
             options: options,
             cancelToken: cancelToken);
+        print('请求地址：' + path);
       } else if (method == "post") {
         response = await getDio().post(path,
             queryParameters: params,
             options: options,
             cancelToken: cancelToken);
+        print('请求地址：' + path + params.toString());
       }
-      print('请求地址：' + response.request.baseUrl + path + params.toString());
       var errorCode = response.data["errorCode"];
       var errorMsg = response.data["errorMsg"];
       var data = response.data["data"];
+      print('请求结果：' + data.toString());
       if (errorCode == 0) {
         onSuccess?.call(data);
       } else {

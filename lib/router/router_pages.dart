@@ -1,5 +1,6 @@
 import 'package:flutter_wan_android/page/category/article_list/view.dart';
 import 'package:flutter_wan_android/page/main/view.dart';
+import 'package:flutter_wan_android/page/search/view.dart';
 import 'package:flutter_wan_android/page/webview/view.dart';
 import 'package:flutter_wan_android/page/wen_da/view.dart';
 import 'package:flutter_wan_android/page/wxarticle/view.dart';
@@ -27,6 +28,10 @@ class RouterPages {
     GetPage(
       name: AppRoutes.wenDaPage,
       page: () => WenDaPage(),
+    ),
+    GetPage(
+      name: AppRoutes.searchPage,
+      page: () => SearchPage(),
     ),
   ];
 }
