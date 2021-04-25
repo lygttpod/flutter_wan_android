@@ -25,7 +25,10 @@ dependencies:
     sdk: flutter
   get: ^3.26.0
   flutter_swiper: 1.1.6
-  dio: 3.0.10
+  dio: 4.0.0
+  dio_cookie_manager: ^2.0.0
+  cookie_jar: 3.0.1
+  path_provider: ^2.0.1
   flutter_easyrefresh: ^2.1.6
   webview_flutter: ^2.0.4
   # The following adds the Cupertino Icons font to your application.

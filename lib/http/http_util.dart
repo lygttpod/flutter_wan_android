@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HttpUtil {
   static HttpUtil _instance;
@@ -18,11 +23,25 @@ class HttpUtil {
   HttpUtil() {
     BaseOptions options = BaseOptions(
         baseUrl: "https://www.wanandroid.com",
-        connectTimeout: 2000,
-        receiveTimeout: 2000,
-        sendTimeout: 2000,
+        connectTimeout: 20000,
+        receiveTimeout: 20000,
+        sendTimeout: 20000,
         headers: {Headers.contentTypeHeader: Headers.jsonContentType});
     getDio().options = options;
+    getCookieJar().then((value) {
+      getDio().interceptors
+        ..add(CookieManager(value))
+        ..add(LogInterceptor(responseBody: true));
+    });
+  }
+
+  Future<CookieJar> getCookieJar() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    print("Cookie存放路径 = $appDocPath");
+    var cj = PersistCookieJar(
+        ignoreExpires: true, storage: FileStorage(appDocPath + "/.cookies/"));
+    return cj;
   }
 
   get(String path,
@@ -50,18 +69,15 @@ class HttpUtil {
             queryParameters: params,
             options: options,
             cancelToken: cancelToken);
-        print('请求地址：' + path);
       } else if (method == "post") {
         response = await getDio().post(path,
             queryParameters: params,
             options: options,
             cancelToken: cancelToken);
-        print('请求地址：' + path + params.toString());
       }
       var errorCode = response.data["errorCode"];
       var errorMsg = response.data["errorMsg"];
       var data = response.data["data"];
-      print('请求结果：' + data.toString());
       if (errorCode == 0) {
         onSuccess?.call(data);
       } else {
